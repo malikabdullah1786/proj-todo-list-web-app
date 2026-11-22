@@ -1,0 +1,23 @@
+import { NextResponse } from 'next/router';
+import type { NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get('access_token');
+  const { pathname } = request.url ? new URL(request.url) : { pathname: '' };
+
+  // If trying to access dashboard without token, redirect to login
+  if (pathname.startsWith('/dashboard') && !token) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  // If trying to access login/register with token, redirect to dashboard
+  if ((pathname.startsWith('/login') || pathname.startsWith('/register')) && token) {
+    return NextResponse.redirect(new URL('/dashboard', request.url));
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ['/dashboard/:path*', '/login', '/register'],
+};
