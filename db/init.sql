@@ -1,18 +1,13 @@
--- PostgreSQL Database Initialization Script for Task Manager
-
-DROP TABLE IF EXISTS tasks CASCADE;
-DROP TABLE IF EXISTS users CASCADE;
-
--- Create users table
-CREATE TABLE users (
+-- 1. Create users table
+CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     hashed_password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Create tasks table with priority check constraint and owner foreign key
-CREATE TABLE tasks (
+-- 2. Create tasks table
+CREATE TABLE IF NOT EXISTS tasks (
     id SERIAL PRIMARY KEY,
     owner_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     title VARCHAR(255) NOT NULL,
@@ -22,5 +17,5 @@ CREATE TABLE tasks (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Create index on owner_id for row-level isolation and performance
-CREATE INDEX idx_owner_tasks ON tasks(owner_id);
+-- 3. Create index on owner_id for tasks
+CREATE INDEX IF NOT EXISTS idx_owner_tasks ON tasks(owner_id);
