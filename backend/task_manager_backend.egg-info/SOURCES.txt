@@ -1,0 +1,12 @@
+pyproject.toml
+app/auth.py
+app/database.py
+app/models.py
+app/schemas.py
+app/routers/auth.py
+app/routers/tasks.py
+task_manager_backend.egg-info/PKG-INFO
+task_manager_backend.egg-info/SOURCES.txt
+task_manager_backend.egg-info/dependency_links.txt
+task_manager_backend.egg-info/requires.txt
+task_manager_backend.egg-info/top_level.txt
