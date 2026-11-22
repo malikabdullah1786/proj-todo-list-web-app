@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/router';
+import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('access_token');
-  const { pathname } = request.url ? new URL(request.url) : { pathname: '' };
+  const { pathname } = request.nextUrl;
 
   // If trying to access dashboard without token, redirect to login
   if (pathname.startsWith('/dashboard') && !token) {
